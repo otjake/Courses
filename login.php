@@ -30,6 +30,7 @@ if($response==2){
     <hr>
 
 </form>
-<a href="register.php">No account? Register here</a>
+<a href="Register.php">No account? Register here</a><br>
+<a href="password_reset.php">Olodo can't remember your password?,Do a reset here</a>
 </body>
 </html>

@@ -110,7 +110,7 @@ if (isset($_POST["login"])) {
 
 }
 
-###### UPDATE PASSWORD ##############################################
+###### UPDATE PASSWORD WHEN LOGGED IN ##############################################
 
 if (isset($_POST['update'])) {
     $error = [];
@@ -135,6 +135,49 @@ $updateSql="Update users SET password='$password' WHERE user_id=$id";
     }else{
         echo "Why do you want to use empty for password,Explain?
             <a href='index.php'>Go back joor</a>";
+    }
+
+}
+
+
+
+
+
+###### RESET PASSWORD WHEN NOT LOGGED IN ##############################################
+
+if (isset($_POST['passReset'])) {
+    $error = [];
+
+    if (empty($_POST['email'])) {
+        array_push($error, "Kindly enter your email for verification");
+    }
+
+    if (empty($_POST['password'])) {
+        array_push($error, "Input a password");
+    }
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+//check if errors exist
+    if (count($error) === 0) {
+$updateSql="UPDATE users SET password='$password' WHERE email='{$email}'";
+        $result_usql = mysqli_query($conn, $updateSql);
+        if ($result_usql) {
+            header('Location:password_reset.php?pres=1');
+
+        } else {
+            echo($updateSql);
+
+            header('Location:password_reset.php?pres=2');
+        }
+    }else{
+
+        foreach ($error as $err) {
+            echo "<p> $err </p>";
+        }
+        echo "Correct the following errors
+            <a href='password_reset.php'>Go back</a>";
     }
 
 }
